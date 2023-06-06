@@ -160,9 +160,16 @@ int MP1Node::introduceSelfToGroup(Address *joinaddr) {
  * DESCRIPTION: Wind up this node and clean up state
  */
 int MP1Node::finishUpThisNode(){
-   /*
-    * Your code goes here
-    */
+//    Node is down!
+    memberNode->inited = false;
+    memberNode->nnb = 0;
+    memberNode->pingCounter = TFAIL;
+    memberNode->inGroup = false;
+    memberNode->timeOutCounter = -1;
+    memberNode->heartbeat = 0;
+//    init memberNode list
+    initMemberListTable(memberNode);
+    return 0;
 }
 
 /**
@@ -215,9 +222,11 @@ void MP1Node::checkMessages() {
  * DESCRIPTION: Message handler for different message types
  */
 bool MP1Node::recvCallBack(void *env, char *data, int size ) {
-	/*
-	 * Your code goes here
-	 */
+    MessageHdr* recvMsg = (MessageHdr*) malloc(size * sizeof(char));
+    memcpy(recvMsg, data, sizeof(MessageHdr));
+
+
+
 }
 
 /**

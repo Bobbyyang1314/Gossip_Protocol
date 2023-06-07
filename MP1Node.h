@@ -31,7 +31,8 @@
 enum MsgTypes{
     JOINREQ,
     JOINREP,
-    DUMMYLASTMSGTYPE
+    DUMMYLASTMSGTYPE,
+    GOSSIP
 };
 
 /**
@@ -41,6 +42,8 @@ enum MsgTypes{
  */
 typedef struct MessageHdr {
 	enum MsgTypes msgType;
+    Address* addr;
+    vector<MemberListEntry> vector_list;
 }MessageHdr;
 
 /**
@@ -71,6 +74,10 @@ public:
 	void checkMessages();
 	bool recvCallBack(void *env, char *data, int size);
 	void nodeLoopOps();
+    void addMember(MessageHdr* messageHdr);
+    void addMember(MemberListEntry* m);
+    MemberListEntry* check_exist(int id, short port);
+    MemberListEntry* check_exist(Address* addr);
 	int isNullAddress(Address *addr);
 	Address getJoinAddress();
 	void initMemberListTable(Member *memberNode);
